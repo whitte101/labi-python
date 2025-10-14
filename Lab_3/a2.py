@@ -1,38 +1,38 @@
 import string
 
 password = input("введите пароль: ")
-isValid = True
+a = True
 
 allowed_sym = string.ascii_uppercase + string.ascii_lowercase + string.digits + '*-#'
-errors = ""
+b = ""
 
 if len(password) != 8:
-    errors = errors + 'Неверная длина пароля \n'
-    isValid = False
+    b = b + 'неверная длина пароля \n'
+    a = False
 
 if password.lower() == password:
-    errors = errors + 'Отсутствуют заглавные буквы \n'
-    isValid = False
+    b = b + 'нет заглавных букв \n'
+    a = False
 
 if password.upper() == password:
-    errors = errors + 'Отсутствуют строчные буквы \n'
-    isValid = False
+    b = b + 'нет строчных букв \n'
+    a = False
 
 if not any(map(str.isdigit, password)):
-    errors = errors + 'Отсутствуют цифры \n'
-    isValid = False
+    b = b + 'нет цифр \n'
+    a = False
 
 if ('*' not in password) and ('-' not in password) and ('#' not in password):
-    errors = errors + 'Отсутствуют специальные символы \n'
-    isValid = False
+    b = b + 'нет специальных символов \n'
+    a = False
 
 if (set(password) - set(allowed_sym)) != set():
-    errors = errors + 'Присутствуют недопустимые символы \n'
-    isValid = False
+    b = b + 'есть недопустимые символы \n'
+    a = False
 
-if isValid == True:
-    print("Надежный пароль")
+if a == True:
+    print("надежный пароль")
 else:
-    print("Пароль не надежный \n")
-    print(errors)
+    print("пароль не надежный \n")
+    print(b)
 
