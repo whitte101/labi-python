@@ -21,28 +21,28 @@ for i in range(n):
     answ = a * b
     
     print(f"\nВопрос {i+1}/{n}")
-    start_time = time.time()
+    st = time.time()
     
     while True:
         print(f"{a} × {b} = ", end='')
-        user_input = input().strip()
+        ui = input().strip()
         
-        if user_input.isdigit():
-            user_answer = int(user_input)
+        if ui.isdigit():
+            ua = int(ui)
             break
         else:
             print("Пожалуйста, введите целое число!")
     
     end_time = time.time()
-    time_taken = end_time - start_time
+    time_taken = end_time - st
     times.append(time_taken)
     total_time += time_taken
     
-    if user_answer == answ:
+    if ua == answ:
         correct += 1
-        print(f"Верно! (Время: {time_taken:.1f} сек)")
+        print(f"Верно (Время: {time_taken:.1f} сек)")
     else:
-        print(f"Неверно! Правильно: {answ} (Время: {time_taken:.1f} сек)")
+        print(f"Неверно Правильно: {answ} (Время: {time_taken:.1f} сек)")
 
 average_time = total_time / n
 percentage = (correct / n) * 100
