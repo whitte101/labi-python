@@ -1,32 +1,32 @@
 import string
 
-password = input("введите пароль: ")
+q = input("введите пароль: ")
 a = True
 
 allowed_sym = string.ascii_uppercase + string.ascii_lowercase + string.digits + '*-#'
 b = ""
 
-if len(password) != 8:
+if len(q) != 8:
     b = b + 'неверная длина пароля \n'
     a = False
 
-if password.lower() == password:
+if q.lower() == q:
     b = b + 'нет заглавных букв \n'
     a = False
 
-if password.upper() == password:
+if q.upper() == q:
     b = b + 'нет строчных букв \n'
     a = False
 
-if not any(map(str.isdigit, password)):
+if not any(map(str.isdigit, q)):
     b = b + 'нет цифр \n'
     a = False
 
-if ('*' not in password) and ('-' not in password) and ('#' not in password):
+if ('*' not in q) and ('-' not in q) and ('#' not in q):
     b = b + 'нет специальных символов \n'
     a = False
 
-if (set(password) - set(allowed_sym)) != set():
+if (set(q) - set(allowed_sym)) != set():
     b = b + 'есть недопустимые символы \n'
     a = False
 
