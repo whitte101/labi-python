@@ -1,4 +1,4 @@
-bytes_size = 1921000
-megabytes = bytes_size / 1024 / 1024
+a = 1921000
+b = a / 1024 / 1024
 
-print(f"Мегабайт: {megabytes:.2f} МБ") 
+print(f"Мегабайт: {b:.2f} МБ") 
