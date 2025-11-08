@@ -24,7 +24,7 @@ for i in range(n):
     st = time.time()
     
     while True:
-        print(f"{a} × {b} = ", end='')
+        print(f"{a} * {b} = ", end='')
         ui = input().strip()
         
         if ui.isdigit():
@@ -33,10 +33,10 @@ for i in range(n):
         else:
             print("Пожалуйста, введите целое число!")
     
-    end_time = time.time()
+    end_time = time.time() #текущее время
     time_taken = end_time - st
-    times.append(time_taken)
-    total_time += time_taken
+    times.append(time_taken) #время в конце аппенд добавляет время в самый конец
+    total_time += time_taken #cумма всего времени
     
     if ua == answ:
         correct += 1
