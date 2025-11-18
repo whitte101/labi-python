@@ -13,7 +13,7 @@ while True:
 
 correct = 0
 total_time = 0.0
-times = []
+times = [] #[СПИСОК] (СЛОВАРЬ/КОРТЕЖ) {МНОЖЕТСВО}
 
 for i in range(n):
     a = random.randint(2, 9)
