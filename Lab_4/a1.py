@@ -16,7 +16,7 @@ for i in range(1, n + 1):
     while True:
         start_time = time.time()
         try:
-            answer = int(input(f"{a} × {b} = "))
+            answer = int(input(f"{a} * {b} = "))
             end_time = time.time()
             break
         except ValueError:
