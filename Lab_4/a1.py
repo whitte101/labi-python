@@ -1,56 +1,41 @@
+
 import random
 import time
 
-while True:
-    try:
-        n = int(input("Введите количество примеров: "))
-        if n <= 0:
-            print("Ошибка: введите положительное число.")
-            continue
-        break
-    except ValueError:
-        print("Ошибка: введите целое число.")
-
-correct = 0
-total_time = 0.0
-times = [] #[СПИСОК] (СЛОВАРЬ/КОРТЕЖ) {МНОЖЕТСВО}
-
-for i in range(n):
+n = int(input("введите количество примеров: "))
+correct_answers = 0
+total_time = 0
+    
+for i in range(1, n + 1):
     a = random.randint(2, 9)
     b = random.randint(2, 9)
-    answ = a * b
-    
-    print(f"\nВопрос {i+1}/{n}")
-    st = time.time()
-    
-    while True:
-        print(f"{a} * {b} = ", end='')
-        ui = input().strip()
+    correct_result = a * b
         
-        if ui.isdigit():
-            ua = int(ui)
+    print(f"вопрос {i}/{n}")
+        
+    while True:
+        start_time = time.time()
+        try:
+            answer = int(input(f"{a} × {b} = "))
+            end_time = time.time()
             break
-        else:
-            print("Пожалуйста, введите целое число!")
-    
-    end_time = time.time() #текущее время
-    time_taken = end_time - st
-    times.append(time_taken) #время в конце аппенд добавляет время в самый конец
-    total_time += time_taken #cумма всего времени
-    
-    if ua == answ:
-        correct += 1
-        print(f"Верно (Время: {time_taken:.1f} сек)")
+        except ValueError:
+            end_time = time.time()
+            print("введите целое число")
+        
+    time_spend = end_time - start_time
+    total_time += time_spend
+        
+    if answer == correct_result:
+        correct_answers += 1
+        print(f"верно! (время: {time_spend:.1f} сек)")
     else:
-        print(f"Неверно Правильно: {answ} (Время: {time_taken:.1f} сек)")
-
-average_time = total_time / n
-percentage = (correct / n) * 100
-
-print("\n==================================================")
-print("                 СТАТИСТИКА:")
-print("==================================================")
-print(f"Общее время: {total_time:.1f} секунд")
-print(f"Среднее время на вопрос: {average_time:.1f} сек")
-print(f"Правильных ответов: {correct}/{n}")
-print(f"Процент правильных: {percentage:.1f}%")
+        print(f"неверно! правильно: {correct_result} (Время: {time_spend:.1f} sec)")
+    
+print("\n" + "="*50)
+print("СТАТИСТИКА:")
+print("="*50)
+print(f"общее время: {total_time:.1f} секунд")
+print(f"среднее время на вопрос: {total_time/n:.1f} сек")
+print(f"правильных ответов: {correct_answers}/{n}")
+print(f"процент правильных: {correct_answers/n*100:.1f}%")
