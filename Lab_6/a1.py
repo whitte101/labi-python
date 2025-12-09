@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict, Counter
 import os
 
-def load_users_data(path):
+def users_dannie(path):
     users = []
     tree = ET.parse(path)
     root = tree.getroot()
@@ -17,7 +17,7 @@ def load_users_data(path):
         })
     return users
 
-def load_workouts_data(path):
+def workout_dannie(path):
     workouts = []
     tree = ET.parse(path)
     root = tree.getroot()
@@ -35,13 +35,13 @@ def load_workouts_data(path):
         })
     return workouts
 
-def attach_workouts_to_users(users, workouts):
+def attacworkoutsusers(users, workouts):
     user_map = {u['user_id']: u for u in users}
     for w in workouts:
         user_map[w['user_id']]['workouts'].append(w)
     return users
 
-def get_stats(users, workouts):
+def statistica(users, workouts):
     return {
         'total_workouts': len(workouts),
         'total_users': len(users),
@@ -50,7 +50,7 @@ def get_stats(users, workouts):
         'total_distance': sum(w['distance'] for w in workouts)
     }
 
-def analyze_user_activity(users):
+def activnost(users):
     result = []
     for u in users:
         ws = u['workouts']
@@ -71,7 +71,7 @@ def analyze_user_activity(users):
         print(f"   Время: {r['total_time_h']:.1f} часов\n")
     return result_sorted
 
-def analyze_workout_types(workouts):
+def tipi_workaouts(workouts):
     total = len(workouts)
     by_type = defaultdict(list)
     for w in workouts:
@@ -88,13 +88,13 @@ def analyze_workout_types(workouts):
         print(f"    Средняя длительность: {avg_dur:.0f} мин")
         print(f"    Средние калории: {avg_cal:.0f} ккал")
 
-def find_user_workouts(users, user_name):
+def poisk_workouts(users, user_name):
     user = next((u for u in users if u['name'].lower() == user_name.lower()), None)
     if user is None:
         return None, []
     return user, user['workouts']
 
-def analyze_user(user, workouts):
+def analiz_usera(user, workouts):
     n = len(workouts)
     total_cal = sum(w['calories'] for w in workouts)
     total_time_h = sum(w['duration'] for w in workouts) / 60.0
@@ -116,11 +116,11 @@ def analyze_user(user, workouts):
 
 def main():
     downloads = os.path.join(os.path.expanduser("~"), "Downloads")
-    users = load_users_data(os.path.join(downloads, 'users.xml'))
-    workouts = load_workouts_data(os.path.join(downloads, 'workouts.xml'))
+    users = users_dannie(os.path.join(downloads, 'users.xml'))
+    workouts = workout_dannie(os.path.join(downloads, 'workouts.xml'))
 
-    users = attach_workouts_to_users(users, workouts)
-    stats = get_stats(users, workouts)
+    users = attacworkoutsusers(users, workouts)
+    stats = statistica(users, workouts)
 
     print("ОБЩАЯ СТАТИСТИКА")
     print("===========================")
@@ -130,11 +130,11 @@ def main():
     print(f"Общее время: {stats['total_time_hours']:.1f} часов")
     print(f"Пройдено дистанции: {stats['total_distance']:.1f} км")
 
-    analyze_user_activity(users)
-    analyze_workout_types(workouts)
+    activnost(users)
+    tipi_workaouts(workouts)
 
-    user, ws = find_user_workouts(users, "Борис")
-    analyze_user(user, ws)
+    user, ws = poisk_workouts(users, "Борис")
+    analiz_usera(user, ws)
 
 if __name__ == "__main__":
     main()

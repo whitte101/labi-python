@@ -1,6 +1,6 @@
 import re
 
-def rle_decode(seq):
+def decoke_rle(seq):
     result = ""
     i = 0
     while i < len(seq):
@@ -13,7 +13,7 @@ def rle_decode(seq):
         i += 1
     return result
 
-def merge_files(parts, output):
+def m_files(parts, output):
     with open(output, "w", encoding="utf-8") as out:
         for fname in parts:
             with open(fname, "r", encoding="utf-8") as f:
@@ -21,7 +21,7 @@ def merge_files(parts, output):
                     out.write(line)
     return output
 
-def load_sequences(filename):
+def zagruzka_seq(filename):
     proteins = {}
     with open(filename, "r", encoding="utf-8") as f:
         for line in f:
@@ -30,11 +30,11 @@ def load_sequences(filename):
                 continue
             protein_name = parts[0].strip()
             organism = parts[1].strip()
-            sequence = rle_decode(parts[2].strip())
+            sequence = decoke_rle(parts[2].strip())
             proteins[protein_name] = (organism, sequence)
     return proteins
 
-def do_search(seq_part, proteins, out):
+def poisk(seq_part, proteins, out):
     found = False
     for name, (org, seq) in proteins.items():
         if seq_part in seq:
@@ -43,7 +43,7 @@ def do_search(seq_part, proteins, out):
     if not found:
         out.write("NOT FOUND\n")
 
-def do_diff(p1, p2, proteins, out):
+def diff(p1, p2, proteins, out):
     missing = []
     if p1 not in proteins:
         missing.append(p1)
@@ -63,7 +63,7 @@ def do_diff(p1, p2, proteins, out):
             diff_count += 1
     out.write(str(diff_count) + "\n")
 
-def do_mode(protein, proteins, out):
+def mode(protein, proteins, out):
     if protein not in proteins:
         out.write("MISSING: " + protein + "\n")
         return
@@ -75,16 +75,16 @@ def do_mode(protein, proteins, out):
     best = sorted([aa for aa in freq if freq[aa] == max_count])[0]
     out.write(f"{best}          {max_count}\n")
 
-def process_all(student_name="Your Name"):
-    seq_file = merge_files(
+def all_process(student_name="Your Name"):
+    seq_file = m_files(
         ["sequences.0.txt", "sequences.1.txt", "sequences.2.txt"],
         "sequences.txt"
     )
-    cmd_file = merge_files(
+    cmd_file = m_files(
         ["commands.0.txt", "commands.1.txt", "commands.2.txt"],
         "commands.txt"
     )
-    proteins = load_sequences(seq_file)
+    proteins = zagruzka_seq(seq_file)
     with open(cmd_file, "r", encoding="utf-8") as com, \
          open("genedata.txt", "w", encoding="utf-8") as out:
         out.write(student_name + "\n")
@@ -98,13 +98,13 @@ def process_all(student_name="Your Name"):
             operation = parts[0]
             out.write(f"{op_number:03d}   {line.strip()}\n")
             if operation == "search":
-                seq_part = rle_decode(parts[1])
-                do_search(seq_part, proteins, out)
+                seq_part = decoke_rle(parts[1])
+                poisk(seq_part, proteins, out)
             elif operation == "diff":
-                do_diff(parts[1], parts[2], proteins, out)
+                diff(parts[1], parts[2], proteins, out)
             elif operation == "mode":
-                do_mode(parts[1], proteins, out)
+                mode(parts[1], proteins, out)
             out.write("--------------------------------------------------------------------------\n")
             op_number += 1
 
-process_all(student_name="Никита")
+all_process(student_name="Никита")
